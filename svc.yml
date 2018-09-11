@@ -16,7 +16,8 @@ pods:
       mongod:
         goal: RUNNING
         cmd: |
-             mongod --replSet rs0  --bind_ip mongodb-0-mongod.autoip.thisdcos.dcos.directory 
+             mongod --replSet rs0 --bind_ip_all
+             echo "Not sleeping at all"
         cpus: {{NODE_CPUS}}
         memory: {{NODE_MEM}}
         ports:
@@ -36,17 +37,19 @@ pods:
       mongos:
         goal: RUNNING 
         cmd: |
-             mongo --host mongodb-0-mongod.autoip.thisdcos.dcos.directory --port 27017     
+             mongo 
+             echo "Sleeping for 1000s"
+             sleep 1000s
         cpus: {{NODE_CPUS}}
         memory: {{NODE_MEM}}
 
 plans:
   deploy:
-    strategy: serial
+    strategy: parallel
     phases:
       master-deploy:
         strategy: serial
         pod: mongodb
         steps:
-         - 0: [[node]]
-         - default: [[main]]
+         - default: [[mongod], [mongos]]
+
