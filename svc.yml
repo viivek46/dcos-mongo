@@ -1,0 +1,46 @@
+name: {{FRAMEWORK_NAME}}
+scheduler:
+  principal: {{FRAMEWORK_PRINCIPAL}}
+  user: {{FRAMEWORK_USER}}
+pods:
+  mongodb:
+    count: {{NODE_COUNT}}
+    image: {{MONGODB_IMAGE}}
+    placement: '{{{NODE_PLACEMENT}}}'
+    {{#ENABLE_VIRTUAL_NETWORK}}
+    networks:
+      {{VIRTUAL_NETWORK_NAME}}:
+        labels: {{VIRTUAL_NETWORK_PLUGIN_LABELS}}
+    {{/ENABLE_VIRTUAL_NETWORK}}
+    tasks:
+      node:
+        goal: RUNNING
+        cmd: |
+             echo "I am in node task"
+             sleep 50s 
+        cpus: {{NODE_CPUS}}
+        memory: {{NODE_MEM}}
+        volume:
+          path: "mongodbservice-container-path"
+          type: {{NODE_DISK_TYPE}}
+          size: {{NODE_DISK}}
+        env:
+          SLEEP_DURATION: {{SLEEP_DURATION}}
+      main:
+        goal: RUNNING 
+        cmd: |
+             echo "I am in main task"
+             sleep 50s
+        cpus: {{NODE_CPUS}}
+        memory: {{NODE_MEM}}
+
+plans:
+  deploy:
+    strategy: serial
+    phases:
+      master-deploy:
+        strategy: serial
+        pod: mongodb
+        steps:
+         - 0: [[node]]
+         - default: [[main]]
