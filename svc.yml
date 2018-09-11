@@ -13,24 +13,30 @@ pods:
         labels: {{VIRTUAL_NETWORK_PLUGIN_LABELS}}
     {{/ENABLE_VIRTUAL_NETWORK}}
     tasks:
-      node:
+      mongod:
         goal: RUNNING
         cmd: |
-             echo "I am in node task"
-             sleep 50s 
+             mongod --replSet rs0  --bind_ip mongodb-0-mongod.autoip.thisdcos.dcos.directory 
         cpus: {{NODE_CPUS}}
         memory: {{NODE_MEM}}
+        ports:
+          mongodb:
+            port: 27017
+            env-key: PORT
+            advertise: true
+            vip:
+              prefix: mongodb
+              port: 27017
         volume:
           path: "mongodbservice-container-path"
           type: {{NODE_DISK_TYPE}}
           size: {{NODE_DISK}}
         env:
           SLEEP_DURATION: {{SLEEP_DURATION}}
-      main:
+      mongos:
         goal: RUNNING 
         cmd: |
-             echo "I am in main task"
-             sleep 50s
+             mongo --host mongodb-0-mongod.autoip.thisdcos.dcos.directory --port 27017     
         cpus: {{NODE_CPUS}}
         memory: {{NODE_MEM}}
 
