@@ -39,8 +39,7 @@ pods:
       mongos:
         goal: RUNNING 
         cmd: |
-             echo "rs.conf()" > test.js
-             mongo test.js
+             mongo script.js
              echo "Sleeping for 1000s"
              sleep 1000s
         cpus: {{NODE_CPUS}}
