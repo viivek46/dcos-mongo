@@ -12,6 +12,8 @@ pods:
       {{VIRTUAL_NETWORK_NAME}}:
         labels: {{VIRTUAL_NETWORK_PLUGIN_LABELS}}
     {{/ENABLE_VIRTUAL_NETWORK}}
+    uris:
+     - {{SCRIPT_JS}}
     tasks:
       mongod:
         goal: RUNNING
