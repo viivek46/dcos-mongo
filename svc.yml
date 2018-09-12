@@ -28,10 +28,6 @@ pods:
             vip:
               prefix: mongodb
               port: 27017
-        configs:
-          scripts:
-            template: test.js
-            dest: 
         volume:
           path: "mongodbservice-container-path"
           type: {{NODE_DISK_TYPE}}
@@ -41,7 +37,8 @@ pods:
       mongos:
         goal: RUNNING 
         cmd: |
-             mongo 
+             echo "rs.conf()" > test.js
+             mongo test.js
              echo "Sleeping for 1000s"
              sleep 1000s
         cpus: {{NODE_CPUS}}
