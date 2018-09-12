@@ -7,7 +7,7 @@
       "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.42.1/bootstrap.zip",
       "executor-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.42.1/executor.zip",
       "scheduler-zip": "https://ecosystem-repo.s3.amazonaws.com/sdk/artifacts/0.42.1/operator-scheduler.zip",
-      "svc": "http://minio.marathon.l4lb.thisdcos.directory:9000/artifacts/mongodbservice/svc.yml"
+      "svc": "http://minio.marathon.l4lb.thisdcos.directory:9000/artifacts/mongodbservice/svc.yml",
       "script-js": "http://minio.marathon.l4lb.thisdcos.directory:9000/artifacts/mongodbservice/script.js"
     },
   "container": {
