@@ -28,6 +28,10 @@ pods:
             vip:
               prefix: mongodb
               port: 27017
+        configs:
+          scripts:
+            template: test.js
+            dest: 
         volume:
           path: "mongodbservice-container-path"
           type: {{NODE_DISK_TYPE}}
