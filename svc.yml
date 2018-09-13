@@ -47,7 +47,7 @@ pods:
              while [ $count -lt $NODE_COUNT ]
              do
              echo "count =>" ${count}
-             echo "{ _id: 0, host: \"mongodb-"${count}"-mongod."$FRAMEWORK_HOST":27017\"}," >> script.js
+             echo "{  _id: "${count}", host: \"mongodb-"${count}"-mongod."$FRAMEWORK_HOST":27017\"}," >> script.js
              cat script.js
              count=`expr $count + 1`
              done
