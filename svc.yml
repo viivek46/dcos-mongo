@@ -39,9 +39,9 @@ pods:
       mongos:
         goal: RUNNING 
         cmd: |
-             mongo script.js
-             echo "Sleeping for 1000s"
-             sleep 1000s
+             echo "Sleeping for 50s"
+             sleep 50s
+             mongo script.js             
         cpus: {{NODE_CPUS}}
         memory: {{NODE_MEM}}
 
@@ -50,8 +50,9 @@ plans:
     strategy: parallel
     phases:
       master-deploy:
-        strategy: serial
+        strategy: parallel
         pod: mongodb
         steps:
-         - default: [[mongod], [mongos]]
+         - default: [[mongod]]
+         - 0: [[mongod], [mongos]]
 
