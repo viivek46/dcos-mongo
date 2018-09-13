@@ -44,7 +44,7 @@ pods:
              echo "Sleeping for 50s"
              sleep 50s
              count=0
-             while [ $count -lt $NODE_COUNT ]
+             while [ $count -lt 3 ]
              do
              echo "count =>" ${count}
              echo "{  _id: "${count}", host: \"mongodb-"${count}"-mongod."$FRAMEWORK_HOST":27017\"}," >> script.js
