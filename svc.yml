@@ -36,11 +36,11 @@ pods:
           size: {{NODE_DISK}}
         env:
           SLEEP_DURATION: {{SLEEP_DURATION}}
-          NODE_COUNT: {{NODE_COUNT}}
       mongos:
         goal: ONCE 
         cmd: |
-             $NODE_COUNT
+             $N_COUNT
+             "$N_COUNT"
              echo "Sleeping for 50s"
              sleep 50s
              count=0
@@ -58,7 +58,7 @@ pods:
         cpus: {{NODE_CPUS}}
         memory: {{NODE_MEM}}
         env:
-          NODE_COUNT: {{NODE_COUNT}}
+          N_COUNT: {{NODE_COUNT}}
 
 plans:
   deploy:
