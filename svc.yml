@@ -37,7 +37,7 @@ pods:
         env:
           SLEEP_DURATION: {{SLEEP_DURATION}}
       mongos:
-        goal: RUNNING 
+        goal: ONCE 
         cmd: |
              echo "Sleeping for 50s"
              sleep 50s
