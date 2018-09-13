@@ -39,6 +39,8 @@ pods:
       mongos:
         goal: ONCE 
         cmd: |
+             {{NODE_COUNT}}
+             echo {{NODE_COUNT}}
              $NODECOUNT
              "$NODECOUNT"
              echo "Sleeping for 50s"
