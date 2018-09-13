@@ -12,7 +12,7 @@
     },
   "container": {
      "docker": {
-       "mongodb-image": "mongo:3.6"
+       "mongodb-image": "quay.io/mongodb/mongodb-enterprise-database:0.2"
      }
   }
   },
