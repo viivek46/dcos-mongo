@@ -88,7 +88,7 @@
           "title": "Node count",
           "description": "Number of mongodbservice pods to run",
           "type": "integer",
-          "default": 1
+          "default": 3
         },
         "placement_constraint": {
           "title": "Placement constraint",
