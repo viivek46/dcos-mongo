@@ -39,14 +39,10 @@ pods:
       mongos:
         goal: ONCE 
         cmd: |
-             {{NODE_COUNT}}
-             echo {{NODE_COUNT}}
-             $NODECOUNT
-             "$NODECOUNT"
              echo "Sleeping for 50s"
              sleep 50s
              count=0
-             while [ $count -lt 3 ]
+             while [ $count -lt {{NODE_COUNT}} ]
              do
              echo "count =>" ${count}
              echo "{  _id: "${count}", host: \"mongodb-"${count}"-mongod."$FRAMEWORK_HOST":27017\"}," >> script.js
