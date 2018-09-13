@@ -36,11 +36,23 @@ pods:
           size: {{NODE_DISK}}
         env:
           SLEEP_DURATION: {{SLEEP_DURATION}}
+          NODE_COUNT: {{NODE_COUNT}}
       mongos:
         goal: ONCE 
         cmd: |
              echo "Sleeping for 50s"
              sleep 50s
+             count=0
+             while [ $count -lt NODE_COUNT ]
+             do
+             echo "count =>" ${count}
+             echo "{ _id: 0, host: \"mongodb-"${count}"-mongod."$FRAMEWORK_HOST":27017\"}," >> script.js
+             cat script.js
+             count=`expr $count + 1`
+             done
+             truncate -s-2 script.js
+             printf "]\n})" >> script.js
+             cat script.js
              mongo script.js             
         cpus: {{NODE_CPUS}}
         memory: {{NODE_MEM}}
