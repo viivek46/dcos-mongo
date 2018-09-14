@@ -24,7 +24,7 @@ pods:
         memory: {{NODE_MEM}}
         ports:
           mongodb:
-            port: 27017
+            port: {{MONGODB_NODE_PORT}} 
             env-key: PORT
             advertise: true
             vip:
@@ -45,7 +45,7 @@ pods:
              while [ $count -lt {{NODE_COUNT}} ]
              do
              echo "count =>" ${count}
-             echo "{  _id: "${count}", host: \"mongodb-"${count}"-mongod."$FRAMEWORK_HOST":27017\"}," >> script.js
+             echo "{  _id: "${count}", host: \"mongodb-"${count}"-mongod."$FRAMEWORK_HOST":{{MONGODB_NODE_PORT}}\"}," >> script.js
              cat script.js
              count=`expr $count + 1`
              done

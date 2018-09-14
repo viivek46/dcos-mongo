@@ -84,6 +84,11 @@
       "description": "mongodbservice pod configuration properties",
       "type": "object",
       "properties": {
+        "node_port": {
+          "description": "Assigned mongodbservice port",
+          "type": "integer",
+          "default": 27017
+        },
         "count": {
           "title": "Node count",
           "description": "Number of mongodbservice pods to run",
