@@ -19,7 +19,6 @@ pods:
         goal: RUNNING
         cmd: |
              mongod --replSet rs0 --bind_ip_all
-             echo "Not sleeping at all"
         cpus: {{NODE_CPUS}}
         memory: {{NODE_MEM}}
         ports:
@@ -39,9 +38,12 @@ pods:
       mongos:
         goal: ONCE 
         cmd: |
+             echo {{MONGODB_REPLICASET_NAME}}
              echo "Sleeping for 50s"
              sleep 50s
              count=0
+             echo "  _id : "\"{{MONGODB_REPLICASET_NAME}}\""," >> script.js
+             echo "   members: [" >> script.js
              while [ $count -lt {{NODE_COUNT}} ]
              do
              echo "count =>" ${count}

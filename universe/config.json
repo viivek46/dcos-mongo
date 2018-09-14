@@ -95,6 +95,12 @@
           "type": "integer",
           "default": 3
         },
+        "replicasetname": {
+          "title": "MongoDB replicaSetName",
+          "description": "Name of the MongoDB ReplicaSet",
+          "type": "string",
+          "default": "rs0"
+        },
         "placement_constraint": {
           "title": "Placement constraint",
           "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]",
