@@ -18,6 +18,11 @@
           "default": "root",
           "title": "User"
         },
+        "ssl_enabled": {
+          "description": "Enables SSL support for Minio Cluster",
+          "type": "boolean",
+          "default": false
+        },
         "service_account": {
           "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.",
           "type": "string",

@@ -18,7 +18,8 @@ pods:
       mongod:
         goal: RUNNING
         cmd: |
-             mongod --replSet rs0 --bind_ip_all
+             echo {{MONGODB_REPLICASET_NAME}}
+             mongod --replSet {{MONGODB_REPLICASET_NAME}} --bind_ip_all
         cpus: {{NODE_CPUS}}
         memory: {{NODE_MEM}}
         ports:
@@ -39,6 +40,8 @@ pods:
         goal: ONCE 
         cmd: |
              echo {{MONGODB_REPLICASET_NAME}}
+             echo {{NODE_COUNT}}
+             echo {{POD_INSTANCE_INDEX}}
              echo "Sleeping for 50s"
              sleep 50s
              count=0
