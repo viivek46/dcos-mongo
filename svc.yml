@@ -18,7 +18,6 @@ pods:
       mongod:
         goal: RUNNING
         cmd: |
-             echo {{MONGODB_REPLICASET_NAME}}
              mongod --replSet {{MONGODB_REPLICASET_NAME}} --bind_ip_all
         cpus: {{NODE_CPUS}}
         memory: {{NODE_MEM}}
@@ -39,10 +38,6 @@ pods:
       mongos:
         goal: ONCE 
         cmd: |
-             echo {{MONGODB_REPLICASET_NAME}}
-             echo {{NODE_COUNT}}
-             echo {{POD_INSTANCE_INDEX}}
-             echo "Sleeping for 50s"
              sleep 50s
              count=0
              echo "  _id : "\"{{MONGODB_REPLICASET_NAME}}\""," >> script.js
@@ -50,14 +45,14 @@ pods:
              while [ $count -lt {{NODE_COUNT}} ]
              do
              echo "count =>" ${count}
-             echo "{  _id: "${count}", host: \"mongodb-"${count}"-mongod."$FRAMEWORK_HOST":{{MONGODB_NODE_PORT}}\"}," >> script.js
+             echo "{  _id: "${count}", host: \"https://mongodb-"${count}"-mongod."$FRAMEWORK_HOST":{{MONGODB_NODE_PORT}}\"}," >> script.js
              cat script.js
              count=`expr $count + 1`
              done
              truncate -s-2 script.js
              printf "]\n})" >> script.js
              cat script.js
-             mongo script.js             
+             mongo script.js
         cpus: {{NODE_CPUS}}
         memory: {{NODE_MEM}}
         env:

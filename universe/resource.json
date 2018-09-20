@@ -12,7 +12,7 @@
     },
   "container": {
      "docker": {
-       "mongodb-image": "mongo:3.6"
+       "mongodb-image": "radiantwf/mongodb-enterprise:4.0"
      }
   }
   },
