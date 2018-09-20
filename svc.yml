@@ -12,6 +12,8 @@ pods:
       {{VIRTUAL_NETWORK_NAME}}:
         labels: {{VIRTUAL_NETWORK_PLUGIN_LABELS}}
     {{/ENABLE_VIRTUAL_NETWORK}}
+    uris:
+      - {{REPLICASET_SH}}
     tasks:
       mongod:
         goal: RUNNING
@@ -36,29 +38,13 @@ pods:
       mongos:
         goal: ONCE 
         cmd: |
-             sleep 50s
-             touch replication.sh
-             count=0
-             touch replication.sh
-             echo "rs.initiate( {" >> replication.sh
-             echo "  _id : "\"{{MONGODB_REPLICASET_NAME}}\""," >> replication.sh
-             echo "   members: [" >> replication.sh
-             while [ $count -lt {{NODE_COUNT}} ]
-             do
-             echo "count =>" ${count}
-             echo "{  _id: "${count}", host: \"mongodb-"${count}"-mongod."$FRAMEWORK_HOST":{{MONGODB_NODE_PORT}}\"}," >> replication.sh
-             cat replication.sh
-             count=`expr $count + 1`
-             done
-             truncate -s-2 replication.sh
-             printf "]\n})" >> replication.sh
-             cat replication.sh
-             mongo replication.sh
-
+             sh replicaset.sh
+        cpus: {{NODE_CPUS}}
         memory: {{NODE_MEM}}
         env:
-          NODECOUNT: {{NODE_COUNT}}
-
+          MONGODB_REPLICASET_NAME: {{MONGODB_REPLICASET_NAME}}
+          MONGODB_REPLICASET_NODE: {{NODE_COUNT}}
+          MONGODB_NODE_PORT: {{MONGODB_NODE_PORT}}
 plans:
   deploy:
     strategy: parallel
