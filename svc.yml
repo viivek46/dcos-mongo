@@ -12,8 +12,6 @@ pods:
       {{VIRTUAL_NETWORK_NAME}}:
         labels: {{VIRTUAL_NETWORK_PLUGIN_LABELS}}
     {{/ENABLE_VIRTUAL_NETWORK}}
-    uris:
-     - {{SCRIPT_JS}}
     tasks:
       mongod:
         goal: RUNNING
@@ -39,21 +37,24 @@ pods:
         goal: ONCE 
         cmd: |
              sleep 50s
+             touch replication.sh
              count=0
-             echo "  _id : "\"{{MONGODB_REPLICASET_NAME}}\""," >> script.js
-             echo "   members: [" >> script.js
+             touch replication.sh
+             echo "rs.initiate( {" >> replication.sh
+             echo "  _id : "\"{{MONGODB_REPLICASET_NAME}}\""," >> replication.sh
+             echo "   members: [" >> replication.sh
              while [ $count -lt {{NODE_COUNT}} ]
              do
              echo "count =>" ${count}
-             echo "{  _id: "${count}", host: \"mongodb-"${count}"-mongod."$FRAMEWORK_HOST":{{MONGODB_NODE_PORT}}\"}," >> script.js
-             cat script.js
+             echo "{  _id: "${count}", host: \"mongodb-"${count}"-mongod."$FRAMEWORK_HOST":{{MONGODB_NODE_PORT}}\"}," >> replication.sh
+             cat replication.sh
              count=`expr $count + 1`
              done
-             truncate -s-2 script.js
-             printf "]\n})" >> script.js
-             cat script.js
-             mongo script.js
-        cpus: {{NODE_CPUS}}
+             truncate -s-2 replication.sh
+             printf "]\n})" >> replication.sh
+             cat replication.sh
+             mongo replication.sh
+
         memory: {{NODE_MEM}}
         env:
           NODECOUNT: {{NODE_COUNT}}
