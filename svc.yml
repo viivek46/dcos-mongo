@@ -21,11 +21,8 @@ pods:
              if [ {{NODE_COUNT}}  = 1 ]
              then
                  mongod
-             elif [ {{NODE_COUNT}} -ge 1 ]
-             then
+             else 
                  mongod --replSet {{MONGODB_REPLICASET_NAME}} --bind_ip_all
-             else
-                 echo "Invalid number of nodes.MongoDB require minimum 3 nodes to run in distributed mode."
              fi
         cpus: {{NODE_CPUS}}
         memory: {{NODE_MEM}}
@@ -50,11 +47,8 @@ pods:
              then
                  sleep 20s
                  mongo
-             elif [ {{NODE_COUNT}} -ge 1 ]
-             then
-                 sh replicaset.sh
              else
-                 echo "Invalid number of nodes.MongoDB require minimum 3 nodes to run in distributed mode."
+                 sh replicaset.sh
              fi
         cpus: {{NODE_CPUS}}
         memory: {{NODE_MEM}}
